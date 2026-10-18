@@ -14,316 +14,119 @@
             --neon-purple: #b026ff;
             --text-main: #e2e8f0;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--bg-color); color: var(--text-main);
+            font-family: sans-serif; overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column; position: relative;
         }
-
-        /* Canvas 特效層 */
-        #fxCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* 頂部狀態列 */
-        .header {
-            height: 6vh;
-            background: linear-gradient(to bottom, #141821, transparent);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
-            z-index: 10;
-            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
-        }
-
-        .header .title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
-            letter-spacing: 2px;
-        }
-
-        .header .stats {
-            display: flex;
-            gap: 30px;
-            font-size: 0.95rem;
-        }
-
-        /* 中部核心戰場 */
-        .battle-zone {
-            height: 59vh;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 10%;
-            position: relative;
-            z-index: 5;
-        }
-
-        .entity-node {
-            background: var(--panel-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 25px;
-            width: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.1s ease;
-        }
-
-        .entity-node.player { border-left: 4px solid var(--neon-blue); }
-        .entity-node.enemy { border-right: 4px solid var(--neon-pink); }
-
-        .intent-icon {
-            height: 50px;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,0,0,0.5)); }
-            to { transform: scale(1.1); filter: drop-shadow(0 0 12px var(--neon-pink)); }
-        }
-
-        .avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            background: rgba(255,255,255,0.03);
-            margin-bottom: 15px;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .player .avatar { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); }
-        .enemy .avatar { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(255, 0, 85, 0.2); }
-
-        .hud-bar {
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        .bar-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-            color: #a0aec0;
-        }
-
-        .bar-container {
-            width: 100%;
-            height: 12px;
-            background: #1a202c;
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .bar-fill {
-            height: 100%;
-            width: 100%;
-            transition: width 0.3s cubic-bezier(0.1, 0.8, 0.3, 1);
-        }
-
+        #fxCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .header { height: 6vh; background: linear-gradient(to bottom, #141821, transparent); display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 10; border-bottom: 1px solid rgba(0, 243, 255, 0.1); }
+        .header .title { font-size: 1rem; font-weight: bold; color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+        .header .stats { display: flex; gap: 15px; font-size: 0.85rem; }
+        .battle-zone { height: 59vh; display: flex; justify-content: space-around; align-items: center; padding: 0 10px; position: relative; z-index: 5; }
+        .entity-node { background: var(--panel-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; width: 45%; display: flex; flex-direction: column; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .entity-node.player { border-left: 3px solid var(--neon-blue); }
+        .entity-node.enemy { border-right: 3px solid var(--neon-pink); }
+        .intent-icon { height: 30px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
+        .avatar { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; background: rgba(255,255,255,0.03); margin-bottom: 8px; }
+        .player .avatar { border: 2px solid var(--neon-blue); }
+        .enemy .avatar { border: 2px solid var(--neon-pink); }
+        .hud-bar { width: 100%; margin-top: 5px; }
+        .bar-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: #a0aec0; }
+        .bar-container { width: 100%; height: 8px; background: #1a202c; border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; width: 100%; transition: width 0.3s ease; }
         .hp-fill { background: linear-gradient(90deg, #ff416c, #ff4b2b); }
         .player .hp-fill { background: linear-gradient(90deg, #00f3ff, #0077ff); }
-
-        .shield-badge {
-            background: #2b6cb0;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 5px;
-            box-shadow: 0 0 8px rgba(0,119,255,0.6);
-        }
-
-        .status-container {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            min-height: 24px;
-        }
-
-        .status-tag {
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        .status-vulnerable { background: rgba(176, 38, 255, 0.2); color: #e0a3ff; border: 1px solid var(--neon-purple); }
-        .status-bleed { background: rgba(255, 0, 85, 0.2); color: #ff80a3; border: 1px solid var(--neon-pink); }
-
-        /* 底部操作與手牌區 */
-        .control-zone {
-            height: 35vh;
-            background: linear-gradient(to top, #090a0d, transparent);
-            display: flex;
-            align-items: center;
-            padding: 0 5%;
-            position: relative;
-            z-index: 5;
-            border-top: 1px solid rgba(255,255,255,0.03);
-        }
-
-        .energy-orb {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #00f3ff 0%, #0044ff 70%);
-            box-shadow: 0 0 25px var(--neon-blue), inset 0 0 20px rgba(255,255,255,0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            border: 2px solid rgba(255,255,255,0.4);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .energy-orb .value { font-size: 1.8rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .energy-orb .label { font-size: 0.7rem; color: rgba(255,255,255,0.8); text-transform: uppercase; }
-
-        .deck-pile {
-            font-size: 0.85rem;
-            color: #a0aec0;
-            background: rgba(255,255,255,0.05);
-            padding: 8px 14px;
-            border-radius: 6px;
-            margin: 0 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .hand-container {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            height: 100%;
-            padding-bottom: 20px;
-            position: relative;
-        }
-
-        /* 卡牌極致視覺 */
-        .card {
-            width: 155px;
-            height: 220px;
-            background: #161a23;
-            border: 2px solid rgba(0, 243, 255, 0.2);
-            border-radius: 12px;
-            margin: 0 -15px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-            display: flex;
-            flex-direction: column;
-            padding: 14px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            transform-origin: bottom center;
-            z-index: 2;
-        }
-
-        .card:hover {
-            transform: translateY(-55px) scale(1.22) rotate(0deg) !important;
-            border-color: var(--neon-blue);
-            box-shadow: 0 15px 30px rgba(0, 243, 255, 0.4);
-            z-index: 100 !important;
-            background: #1c2331;
-        }
-
-        .card.card-attack { border-color: rgba(255, 0, 85, 0.3); }
-        .card.card-attack:hover { border-color: var(--neon-pink); box-shadow: 0 15px 30px rgba(255,0,85,0.4); }
-        .card.card-strategy { border-color: rgba(176, 38, 255, 0.3); }
-        .card.card-strategy:hover { border-color: var(--neon-purple); box-shadow: 0 15px 30px rgba(176,38,255,0.4); }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .card-title {
-            font-size: 0.95rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .card-cost {
-            width: 24px;
-            height: 24px;
-            background: #00f3ff;
-            color: #000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
+        .shield-badge { background: #2b6cb0; color: white; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-top: 4px; }
+        .shield-badge.hidden { display: none !important; }
+        .status-container { display: flex; gap: 4px; margin-top: 5px; min-height: 15px; }
+        .status-tag { padding: 1px 4px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; background: rgba(176, 38, 255, 0.2); color: #e0a3ff; border: 1px solid var(--neon-purple); }
+        .control-zone { height: 35vh; background: #090a0d; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 10px; z-index: 5; border-top: 1px solid rgba(255,255,255,0.03); }
+        .control-hud { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; }
+        .energy-orb { width: 50px; height: 50px; border-radius: 50%; background: radial-gradient(circle, #00f3ff 0%, #0044ff 70%); display: flex; flex-direction: column; justify-content: center; align-items: center; font-weight: bold; font-size: 0.8rem; }
+        .deck-pile { font-size: 0.75rem; color: #a0aec0; }
+        .hand-container { width: 100%; flex-grow: 1; display: flex; justify-content: center; align-items: flex-end; gap: 5px; overflow-x: auto; padding-bottom: 5px; }
+        .card { width: 95px; height: 135px; background: #161a23; border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 8px; display: flex; flex-direction: column; padding: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); flex-shrink: 0; }
+        .card.card-attack { border-color: rgba(255, 0, 85, 0.4); }
+        .card.card-strategy { border-color: rgba(176, 38, 255, 0.4); }
+        .card-header { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: bold; margin-bottom: 4px; }
+        .card-cost { width: 16px; height: 16px; background: #00f3ff; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .card-attack .card-cost { background: var(--neon-pink); color: white; }
         .card-strategy .card-cost { background: var(--neon-purple); color: white; }
-
-        .card-type {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: #718096;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .card-desc {
-            font-size: 0.8rem;
-            color: #cbd5e0;
-            line-height: 1.4;
-            flex-grow: 1;
-        }
-
-        /* 全螢幕覆蓋選單（開始與結束） */
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 11, 15, 0.95);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease;
+        .card-type { font-size: 0.55rem; color: #718096; margin-bottom: 4px; }
+        .card-desc { font-size: 0.6rem; color: #cbd5e0; line-height: 1.2; flex-grow: 1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 11, 15, 0.95); z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .overlay.hidden { display: none; }
+        .menu-box { text-align: center; background: #141821; padding: 30px; border-radius: 12px; border: 1px solid rgba(0,243,255,0.2); width: 85%; }
+        .menu-title { font-size: 2rem; margin-bottom: 10px; background: linear-gradient(45deg, #00f3ff, #b026ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: bold; }
+        .menu-desc { color: #a0aec0; margin-bottom: 20px; font-size: 0.8rem; line-height: 1.4; }
+        .btn-neon { padding: 10px 25px; font-size: 0.9rem; font-weight: bold; color: #000; background: var(--neon-blue); border: none; border-radius: 20px; cursor: pointer; box-shadow: 0 0 10px var(--neon-blue); }
+        .end-turn-btn { background: transparent; color: var(--neon-blue); border: 1px solid var(--neon-blue); padding: 6px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <canvas id="fxCanvas"></canvas>
+    <div id="startOverlay" class="overlay">
+        <div class="menu-box">
+            <div class="menu-title">CYBER SPARK</div>
+            <div class="menu-desc">高智商策略卡牌。精密計算敵方意圖，擊潰核心網絡。</div>
+            <button class="btn-neon" onclick="game.start()">初始化連結</button>
+        </div>
+    </div>
+    <div id="gameOverOverlay" class="overlay hidden">
+        <div class="menu-box" style="border-color: var(--neon-pink);">
+            <div class="menu-title" style="background: linear-gradient(45deg, #ff0055, #ff4b2b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">連結中斷</div>
+            <div class="menu-desc" id="gameOverDesc">防線崩潰。</div>
+            <button class="btn-neon" style="background: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink);" onclick="game.start()">重啟終端</button>
+        </div>
+    </div>
+    <div class="header">
+        <div class="title">// CYBER_SPARK</div>
+        <div class="stats">
+            <div>節點: <span id="stageText" style="color:var(--neon-blue)">1</span></div>
+            <div>最高: <span id="highScoreText" style="color:var(--neon-green)">0</span></div>
+        </div>
+    </div>
+    <div class="battle-zone" id="battleZone">
+        
+            <div class="intent-icon">🛡️</div>
+            <div class="avatar">🧑‍💻</div>
+            <div class="hud-bar">
+                <div class="bar-label"><span>HP</span><span id="playerHpText">80/80</span></div>
+                <div class="bar-container"><div id="playerHpFill" class="bar-fill hp-fill"></div></div>
+            </div>
+            <div id="playerShield" class="shield-badge hidden">🛡️ 0</div>
+            <div class="status-container" id="playerStatuses"></div>
+        </div>
+        
+            <div class="intent-icon" id="enemyIntentIcon">⚔️</div>
+            <div class="avatar">🤖</div>
+            <div class="hud-bar">
+                <div class="bar-label"><span id="enemyName">主機</span><span id="enemyHpText">60/60</span></div>
+                <div class="bar-container"><div id="enemyHpFill" class="bar-fill hp-fill"></div></div>
+            </div>
+            <div id="enemyShield" class="shield-badge hidden">🛡️ 0</div>
+            <div class="status-container" id="enemyStatuses"></div>
+        </div>
+    </div>
+    <div class="control-zone">
+        <div class="control-hud">
+            <div class="energy-orb"><div id="energyValue">3</div><div style="font-size:0.5rem">ENG</div></div>
+            <div class="deck-pile">抽: <span id="drawPileCount">0</span> | 棄: <span id="discardPileCount">0</span></div>
+            <button class="end-turn-btn" onclick="game.endTurn()">結束回合</button>
+        </div>
+        <div class="hand-container" id="hand"></div>
+    </div>
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                if (type === 'attack') {
+                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+                } else if (type === 'shield') {
